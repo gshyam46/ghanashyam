@@ -6,7 +6,7 @@ The owner's screenshot identified a long vertical line through the hero heading.
 
 The final production build and TypeScript passed. The existing drag-alignment regression now asserts no outline during and after pointer dragging, retained focus, and restored keyboard focus visibility. Together with armillary motion, reduced motion, reset, fallback, and native phone scrolling, **12 production checks passed in 58.9 seconds**, with two intentional device-specific skips. [Drag screenshot](screenshots/drag-outline-fixed.png) shows the heading without the vertical line. Preview: http://127.0.0.1:3001.
 
-The owner authorized pushing using the newly added collaborator account. GitHub connections currently time out from the workstation, including outside the sandbox; a remote push is not yet confirmed. The validated source and fix are mirrored to the release checkout.
+GitHub connectivity recovered after verification, and device authentication confirmed `gshyam46`. The validated source and fix are mirrored to the release checkout. Repository publication and Vercel deployment are separate steps; see [LAUNCH.md](LAUNCH.md) for release status.
 
 ## Previous: original sphere finish restored
 

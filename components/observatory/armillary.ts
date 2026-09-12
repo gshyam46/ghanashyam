@@ -170,27 +170,33 @@ export function createArmillary(compact: boolean, palette: ArmillaryPalette) {
   const etching = material(new THREE.MeshStandardMaterial({ metalness: .4, roughness: .65, envMapIntensity: .5 }), "engraving");
   const tracks = material(new THREE.LineBasicMaterial({ transparent: true, opacity: .29, depthWrite: false }), "engraving");
   const ceramic = material(new THREE.MeshPhysicalMaterial({
-    metalness: 0, roughness: .92, clearcoat: 0, specularIntensity: .08, envMapIntensity: .12,
+    metalness: .06, roughness: .65, clearcoat: .035, clearcoatRoughness: .6, envMapIntensity: .3,
   }), "ceramic");
-  // A separate, depth-tested halo glows outside the dark surface without adding sheen.
-  const haloSize = 128, haloPixels = new Uint8Array(haloSize * haloSize * 4);
-  for (let y = 0; y < haloSize; y++) {
-    for (let x = 0; x < haloSize; x++) {
-      const radius = Math.hypot((x + .5) / haloSize * 2 - 1, (y + .5) / haloSize * 2 - 1);
-      const light = Math.exp(-Math.pow(Math.max(0, radius - .58) / .145, 2));
-      const fade = 1 - THREE.MathUtils.smoothstep(radius, .88, 1);
-      const offset = (y * haloSize + x) * 4;
-      haloPixels[offset] = haloPixels[offset + 1] = haloPixels[offset + 2] = 255;
-      haloPixels[offset + 3] = Math.round(light * fade * 255);
-    }
-  }
-  const haloMap = new THREE.DataTexture(haloPixels, haloSize, haloSize, THREE.RGBAFormat);
-  haloMap.minFilter = haloMap.magFilter = THREE.LinearFilter;
-  haloMap.needsUpdate = true;
-  textures.add(haloMap);
-  const coreHaloMaterial = material(new THREE.SpriteMaterial({
-    map: haloMap, transparent: true, opacity: .22, depthWrite: false, depthTest: true, toneMapped: false,
-  }), "coreLight");
+  // A spherical back-face glow cannot slice through the core as the instrument turns.
+  const coreHaloMaterial = new THREE.ShaderMaterial({
+    uniforms: { color: { value: finishTargets[palette].coreLight.clone() } },
+    vertexShader: `
+      varying vec3 haloNormal;
+      void main() {
+        haloNormal = normalize(normalMatrix * normal);
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color;
+      varying vec3 haloNormal;
+      void main() {
+        float facing = normalize(haloNormal).z;
+        float radius = sqrt(max(0.0, 1.0 - facing * facing));
+        float alpha = .18 * (1.0 - smoothstep(.68, 1.0, radius));
+        gl_FragColor = vec4(color, alpha);
+        #include <colorspace_fragment>
+      }
+    `,
+    side: THREE.BackSide, transparent: true, depthWrite: false, depthTest: true, toneMapped: false,
+  });
+  materials.add(coreHaloMaterial);
+  changingColors.push({ color: coreHaloMaterial.uniforms.color.value, finish: "coreLight" });
   const signal = material(new THREE.MeshBasicMaterial({
     transparent: true, opacity: .65, vertexColors: true,
     blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false, side: THREE.DoubleSide,
@@ -292,9 +298,8 @@ export function createArmillary(compact: boolean, palette: ArmillaryPalette) {
   core.rotation.set(.26, .18, -.15);
   pivots[pivots.length - 1].add(core);
   addMesh(core, geometry(new THREE.SphereGeometry(.51, compact ? 40 : 64, compact ? 26 : 40)), ceramic, "Ceramic centre");
-  const coreHalo = new THREE.Sprite(coreHaloMaterial);
+  const coreHalo = new THREE.Mesh(geometry(new THREE.SphereGeometry(.70, compact ? 40 : 64, compact ? 26 : 40)), coreHaloMaterial);
   coreHalo.name = "Diffuse core halo";
-  coreHalo.scale.set(1.68, 1.68, 1);
   core.add(coreHalo);
   addGimbal(pivots[pivots.length - 1], RINGS[RINGS.length - 1].radius, .54, "x", true);
 

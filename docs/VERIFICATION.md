@@ -1,6 +1,12 @@
 # Verification - 12 September 2026
 
-## Latest: matte core with a diffuse halo
+## Latest: original sphere finish restored
+
+Restored the original ceramic material values: metalness .06, roughness .65, clearcoat .035, clearcoat roughness .6, and environment intensity .3. The assembly seam remains removed. A spherical back-face halo replaces the flat sprite, retaining subtle light outside the core during rotation. An actual mouse drag registered a mesh hit; rest, drag, and further rotated captures showed a smooth core surface. Copper bands can still pass in front of the core as the instrument turns; these are real ring occlusions, not a surface seam.
+
+The production build passed, including TypeScript. All eight existing armillary motion, Pause, reduced-motion, and keyboard/reset checks passed on desktop and mobile in 54.0 seconds. Production WebGL captures: [desktop](screenshots/desktop-core-original-restored.png) and [phone](screenshots/mobile-core-original-restored.png). Preview: http://127.0.0.1:3001. Earlier captures below describe previous finishes. Publishing remains pending account authentication.
+
+## Previous: matte core with a diffuse halo
 
 The owner clarified that glow should surround a matte black sphere. The bright glazed finish is replaced with dark ceramic, high roughness, no clearcoat, and restrained specular response. A separate soft radial halo fades outside the silhouette and is depth-tested against the sphere and rings. The halo follows all three palettes and has no independent animation clock. The centre remains seam-free in WebGL and the SVG fallback.
 

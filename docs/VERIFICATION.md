@@ -1,6 +1,12 @@
 # Verification - 12 September 2026
 
-## Latest: luminous core and contact headline
+## Latest: matte core with a diffuse halo
+
+The owner clarified that glow should surround a matte black sphere. The bright glazed finish is replaced with dark ceramic, high roughness, no clearcoat, and restrained specular response. A separate soft radial halo fades outside the silhouette and is depth-tested against the sphere and rings. The halo follows all three palettes and has no independent animation clock. The centre remains seam-free in WebGL and the SVG fallback.
+
+The final production build and TypeScript passed. The existing armillary and drag-alignment suites passed **12 checks in 51.1 seconds**, with two intentional device-specific skips. Desktop/phone captures show the matte finish without glossy highlights; Copper, Silver, Ink, and the fallback were visually checked. No page errors were captured in the production WebGL sessions. Current preview: **http://127.0.0.1:3001**. Current source, documentation, and screenshots are mirrored to the release checkout. GitHub and Vercel authentication remain pending.
+
+## Previous: core finish and contact headline
 
 The centre now has a softly luminous, glazed finish with palette-matched emission. Both the 3D assembly seam and the SVG seam are removed. The core no longer receives a hard band shadow; its shape still shades smoothly and casts a shadow on the surrounding instrument. The contact headline is the owner's chosen "Let’s build together."
 

@@ -151,10 +151,16 @@ function StaticSculpture({ palette }: { palette: PaletteName }) {
           <stop stopColor={dark} /><stop offset=".22" stopColor={highlight} /><stop offset=".46" stopColor={metal} /><stop offset=".72" stopColor={highlight} /><stop offset="1" stopColor={dark} />
         </linearGradient>
         <radialGradient id={`armillary-core-${id}`} cx=".32" cy=".26" r=".75">
-          <stop stopColor={ink ? "#e4d8b0" : silver ? "#e0f1f5" : "#ffe0b0"} /><stop offset=".35" stopColor={ink ? "#a9a782" : silver ? "#b0cbd3" : "#d0a575"} /><stop offset="1" stopColor={ink ? "#646b4f" : silver ? "#647d86" : "#896541"} />
+          <stop stopColor={ink ? "#455343" : silver ? "#354148" : "#3b3e36"} /><stop offset=".48" stopColor={ink ? "#2c392e" : silver ? "#242c31" : "#252923"} /><stop offset="1" stopColor={ink ? "#19291e" : "#101811"} />
+        </radialGradient>
+        <radialGradient id={`armillary-halo-${id}`}>
+          <stop offset=".60" stopColor={silver ? "#b5d6e6" : ink ? "#d6c092" : "#efb66f"} stopOpacity=".22" />
+          <stop offset=".76" stopColor={silver ? "#b5d6e6" : ink ? "#d6c092" : "#efb66f"} stopOpacity=".09" />
+          <stop offset="1" stopColor={silver ? "#b5d6e6" : ink ? "#d6c092" : "#efb66f"} stopOpacity="0" />
         </radialGradient>
       </defs>
       <g strokeLinecap="round" strokeLinejoin="round">{drawArcs(false)}{drawTicks(false)}</g>
+      <circle cx="300" cy="300" r="82" fill={`url(#armillary-halo-${id})`} />
       <circle cx="300" cy="300" r="50" fill={`url(#armillary-core-${id})`} />
       <g strokeLinecap="round" strokeLinejoin="round">{drawArcs(true)}{drawTicks(true)}</g>
     </svg>
@@ -228,7 +234,7 @@ export default function Sculpture({ scene = "signal", palette = "copper", paused
     sculpture.traverse(object => {
       if (object instanceof THREE.Mesh && /Bevelled satin|Ceramic centre/.test(object.name)) {
         object.castShadow = !compact;
-        // Keep the luminous core smooth; band shadows otherwise read as a seam.
+        // Keep the matte core smooth; band shadows otherwise read as a seam.
         object.receiveShadow = !compact && object.name !== "Ceramic centre";
       }
     });
@@ -564,7 +570,7 @@ export default function Sculpture({ scene = "signal", palette = "copper", paused
       data-drag-hit="false"
       data-dragging="false"
       role="img"
-      aria-label={`A kinetic armillary with five nested metallic rings and a softly glowing centre.${ready ? " Drag or use arrow keys to rotate; press R to reset." : ""}`}
+      aria-label={`A kinetic armillary with five nested metallic rings around a matte black centre with a soft halo.${ready ? " Drag or use arrow keys to rotate; press R to reset." : ""}`}
       tabIndex={ready ? 0 : -1}
       style={{ position: "absolute", inset: 0, cursor: "default", touchAction: "pan-y" }}
     >

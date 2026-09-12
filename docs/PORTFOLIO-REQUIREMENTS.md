@@ -13,7 +13,7 @@ This is the source of truth for the requested experience. It records the owner's
 
 ## Sculpture: selected kinetic armillary
 
-The owner chose the second proposed sculpture with “do the second,” referring to the copper nested-ring armillary mockup. Replace the woven trefoil with **five machined copper rings nested around a softly glowing ceramic core**, with warm light travelling through the form. The rings should move slowly about different axes, respond to dragging with a gentle inertial settle, and align with the page's chapter poses.
+The owner chose the second proposed sculpture with “do the second,” referring to the copper nested-ring armillary mockup. Replace the woven trefoil with **five machined copper rings nested around a matte black ceramic core with a diffuse halo**, with warm light travelling through the form. The rings should move slowly about different axes, respond to dragging with a gentle inertial settle, and align with the page's chapter poses.
 
 Keep the established page composition, three material treatments, phone layouts, native scrolling, keyboard rotation/reset, Pause, reduced-motion support, and a static SVG fallback. The new sculpture should feel like a precise instrument within the existing Observatory. Earlier screenshots, recordings, and passed checks remain historical evidence for the previous implementation; verify the armillary's appearance, movement, interaction, and fallback separately before claiming it is checked or deployed.
 

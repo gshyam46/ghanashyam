@@ -25,7 +25,7 @@ Direct material links: `/?theme=copper`, `/?theme=ink`, and `/?theme=silver`.
 
 ## Explore the prototype
 
-- **Turn the armillary.** Five machined copper rings nest around a softly glowing ceramic core. A warm light travels through the form as the rings turn slowly about different axes; scrolling aligns the sculpture with each chapter. Drag to rotate it and release for a gentle inertial settle. A precise desktop dot and softly following cursor ring adapt to controls and dragging; text inputs and touch/reduced-motion use native behavior. Focus the sculpture and use arrow keys; press **R** to reset.
+- **Turn the armillary.** Five machined copper rings nest around a matte black ceramic core with a diffuse halo. A warm light travels through the form as the rings turn slowly about different axes; scrolling aligns the sculpture with each chapter. Drag to rotate it and release for a gentle inertial settle. A precise desktop dot and softly following cursor ring adapt to controls and dragging; text inputs and touch/reduced-motion use native behavior. Focus the sculpture and use arrow keys; press **R** to reset.
 - **Scroll naturally** through the four chapters, use the bottom navigation, or press **K** for the index.
 - **Inspect selected systems.** Relay has explorable workflow stages. The LLM observability model has selectable trace spans and a context budget slider. AIDA changes prepared SQL and sample results when you select a question.
 - **Look closer at the experience.** The career record runs chronologically from ContentEaseAI to Oracle, with concise year labels. Open any entry for contributions, technologies, location, and previous/next navigation. Selected engineering, applied-AI, and observability skills sit beside the practice notes.
@@ -82,7 +82,7 @@ The armillary production build and 14 applicable browser checks passed. See [VER
 | `app/refinements.css` | Readability, scroll reveals, touch layouts, and small-screen refinements |
 | `components/observatory/Observatory.tsx` | Chapters, navigation, settings, and contact |
 | `components/observatory/Sculpture.tsx` | Armillary rendering, pointer/keyboard interaction, chapter poses, and static SVG fallback |
-| `components/observatory/armillary.ts` | Procedural nested rings, luminous ceramic core, materials, and travelling light |
+| `components/observatory/armillary.ts` | Procedural nested rings, matte ceramic core and halo, materials, and travelling light |
 | `components/observatory/Atmosphere.tsx` | Pointer-responsive mathematical field and parallax |
 | `components/observatory/Cursor.tsx` | Precise desktop pointer with a softly following ring and native-input fallbacks |
 | `components/observatory/SystemMap.tsx` | Annotated architectural layers revealed by ordinary scrolling |

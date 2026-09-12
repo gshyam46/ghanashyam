@@ -5,9 +5,9 @@ export type ArmillaryScene = "signal" | "systems" | "practice" | "contact";
 
 const TAU = Math.PI * 2;
 const FINISHES = {
-  copper: { band: "#9e633c", edge: "#bd8a61", bearing: "#594333", engraving: "#492f21", ceramic: "#8c6948", coreLight: "#efb66f", signal: "#ffe0b1" },
-  silver: { band: "#a3b1b5", edge: "#d0dadf", bearing: "#53636a", engraving: "#465359", ceramic: "#75888e", coreLight: "#b5d6e6", signal: "#d6edfb" },
-  ink: { band: "#526252", edge: "#98a18b", bearing: "#36483c", engraving: "#aeb49d", ceramic: "#67715a", coreLight: "#d6c092", signal: "#c29b65" },
+  copper: { band: "#9e633c", edge: "#bd8a61", bearing: "#594333", engraving: "#492f21", ceramic: "#242825", coreLight: "#efb66f", signal: "#ffe0b1" },
+  silver: { band: "#a3b1b5", edge: "#d0dadf", bearing: "#53636a", engraving: "#465359", ceramic: "#20282d", coreLight: "#b5d6e6", signal: "#d6edfb" },
+  ink: { band: "#526252", edge: "#98a18b", bearing: "#36483c", engraving: "#aeb49d", ceramic: "#26342c", coreLight: "#d6c092", signal: "#c29b65" },
 } satisfies Record<ArmillaryPalette, Record<string, string>>;
 type Finish = keyof typeof FINISHES.copper;
 
@@ -170,10 +170,27 @@ export function createArmillary(compact: boolean, palette: ArmillaryPalette) {
   const etching = material(new THREE.MeshStandardMaterial({ metalness: .4, roughness: .65, envMapIntensity: .5 }), "engraving");
   const tracks = material(new THREE.LineBasicMaterial({ transparent: true, opacity: .29, depthWrite: false }), "engraving");
   const ceramic = material(new THREE.MeshPhysicalMaterial({
-    metalness: .22, roughness: .28, clearcoat: .48, clearcoatRoughness: .24, envMapIntensity: .65,
-    emissive: finishTargets[palette].coreLight, emissiveIntensity: .28,
+    metalness: 0, roughness: .92, clearcoat: 0, specularIntensity: .08, envMapIntensity: .12,
   }), "ceramic");
-  changingColors.push({ color: ceramic.emissive, finish: "coreLight" });
+  // A separate, depth-tested halo glows outside the dark surface without adding sheen.
+  const haloSize = 128, haloPixels = new Uint8Array(haloSize * haloSize * 4);
+  for (let y = 0; y < haloSize; y++) {
+    for (let x = 0; x < haloSize; x++) {
+      const radius = Math.hypot((x + .5) / haloSize * 2 - 1, (y + .5) / haloSize * 2 - 1);
+      const light = Math.exp(-Math.pow(Math.max(0, radius - .58) / .145, 2));
+      const fade = 1 - THREE.MathUtils.smoothstep(radius, .88, 1);
+      const offset = (y * haloSize + x) * 4;
+      haloPixels[offset] = haloPixels[offset + 1] = haloPixels[offset + 2] = 255;
+      haloPixels[offset + 3] = Math.round(light * fade * 255);
+    }
+  }
+  const haloMap = new THREE.DataTexture(haloPixels, haloSize, haloSize, THREE.RGBAFormat);
+  haloMap.minFilter = haloMap.magFilter = THREE.LinearFilter;
+  haloMap.needsUpdate = true;
+  textures.add(haloMap);
+  const coreHaloMaterial = material(new THREE.SpriteMaterial({
+    map: haloMap, transparent: true, opacity: .22, depthWrite: false, depthTest: true, toneMapped: false,
+  }), "coreLight");
   const signal = material(new THREE.MeshBasicMaterial({
     transparent: true, opacity: .65, vertexColors: true,
     blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false, side: THREE.DoubleSide,
@@ -271,10 +288,14 @@ export function createArmillary(compact: boolean, palette: ArmillaryPalette) {
   });
 
   const core = new THREE.Group();
-  core.name = "Luminous reference core";
+  core.name = "Matte reference core with a soft halo";
   core.rotation.set(.26, .18, -.15);
   pivots[pivots.length - 1].add(core);
   addMesh(core, geometry(new THREE.SphereGeometry(.51, compact ? 40 : 64, compact ? 26 : 40)), ceramic, "Ceramic centre");
+  const coreHalo = new THREE.Sprite(coreHaloMaterial);
+  coreHalo.name = "Diffuse core halo";
+  coreHalo.scale.set(1.68, 1.68, 1);
+  core.add(coreHalo);
   addGimbal(pivots[pivots.length - 1], RINGS[RINGS.length - 1].radius, .54, "x", true);
 
   const signalCarrier = new THREE.Group();

@@ -1,6 +1,6 @@
 ﻿# Vercel launch
 
-The production source is prepared at the root of [gshyam46/ghanashyam](https://github.com/gshyam46/ghanashyam). Publication is in progress as of 12 September 2026: the release source has not yet been pushed, Vercel account authentication and project linking remain pending, and no production deployment URL has been verified. The repository's existing Apache 2.0 license is preserved in `LICENSE`.
+The production source is prepared at the root of [gshyam46/ghanashyam](https://github.com/gshyam46/ghanashyam). Publication is in progress as of 12 September 2026: the release source is ready with the drag-outline fix but GitHub connections currently time out; Vercel account authentication and project linking remain pending, and no production deployment URL has been verified. The repository's existing Apache 2.0 license is preserved in `LICENSE`.
 
 ## Project settings
 

@@ -93,9 +93,19 @@ test("visible armillary rings are draggable, while empty outer canvas is not", a
     await expect(sculpture).toHaveAttribute("data-drag-hit", "true");
     await page.mouse.down();
     await expect(sculpture).toHaveAttribute("data-dragging", "true");
+    await expect(sculpture).toBeFocused();
+    await expect(sculpture).toHaveCSS("outline-style", "none");
     await page.mouse.up();
     await expect(sculpture).toHaveAttribute("data-dragging", "false");
+    await expect(sculpture).toHaveCSS("outline-style", "none");
   }
+
+  // Keyboard input restores a visible focus cue after mouse interaction.
+  await sculpture.press("ArrowRight");
+  await expect(sculpture).toHaveCSS("outline-style", "solid");
+  await page.getByRole("button", { name: "Open experience settings" }).focus();
+  await sculpture.focus();
+  await expect(sculpture).toHaveCSS("outline-style", "solid");
 
   const misses = await findOuterMisses(page, sculpture);
   for (const { x, y } of misses) {

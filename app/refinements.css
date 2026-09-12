@@ -201,3 +201,6 @@
   .observatory .note-topic > .observatory-select { flex: 1; min-width: 0; }
 }
 @media(prefers-reduced-motion:reduce) { [data-reveal] { opacity: 1; translate: none; } }
+
+/* Mouse focus supports immediate arrow-key rotation without outlining the oversized canvas. */
+.observatory .signal-sculpture[data-focus-input="pointer"]:focus { outline: none; }

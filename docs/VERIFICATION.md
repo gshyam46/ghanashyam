@@ -1,6 +1,14 @@
 # Verification - 12 September 2026
 
-## Latest: original sphere finish restored
+## Latest: drag focus outline fixed
+
+The owner's screenshot identified a long vertical line through the hero heading. Reproduction confirmed the sculpture container had a 2px copper focus outline at x=446px during dragging (1440px viewport). This was a browser focus outline on the oversized container, not the sphere or a metallic ring. Mouse-initiated focus now suppresses that outline while preserving immediate keyboard rotation. Keyboard input and focus after blur restore the visible focus cue.
+
+The final production build and TypeScript passed. The existing drag-alignment regression now asserts no outline during and after pointer dragging, retained focus, and restored keyboard focus visibility. Together with armillary motion, reduced motion, reset, fallback, and native phone scrolling, **12 production checks passed in 58.9 seconds**, with two intentional device-specific skips. [Drag screenshot](screenshots/drag-outline-fixed.png) shows the heading without the vertical line. Preview: http://127.0.0.1:3001.
+
+The owner authorized pushing using the newly added collaborator account. GitHub connections currently time out from the workstation, including outside the sandbox; a remote push is not yet confirmed. The validated source and fix are mirrored to the release checkout.
+
+## Previous: original sphere finish restored
 
 Restored the original ceramic material values: metalness .06, roughness .65, clearcoat .035, clearcoat roughness .6, and environment intensity .3. The assembly seam remains removed. A spherical back-face halo replaces the flat sprite, retaining subtle light outside the core during rotation. An actual mouse drag registered a mesh hit; rest, drag, and further rotated captures showed a smooth core surface. Copper bands can still pass in front of the core as the instrument turns; these are real ring occlusions, not a surface seam.
 

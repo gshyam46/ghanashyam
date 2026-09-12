@@ -395,7 +395,10 @@ export default function Sculpture({ scene = "signal", palette = "copper", paused
       velocityX = 0;
       velocityY = 0;
       lastPointerTime = event.timeStamp;
-      if (event.pointerType === "mouse") container!.focus({ preventScroll: true });
+      if (event.pointerType === "mouse") {
+        container!.dataset.focusInput = "pointer";
+        container!.focus({ preventScroll: true });
+      }
       container!.setPointerCapture(event.pointerId);
       container!.style.cursor = "grabbing";
       requestFrame();
@@ -453,6 +456,7 @@ export default function Sculpture({ scene = "signal", palette = "copper", paused
     }
 
     function keyDown(event: KeyboardEvent) {
+      delete container!.dataset.focusInput;
       if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "r", "R"].includes(event.key)) return;
       event.preventDefault();
       velocityX = 0;
@@ -565,6 +569,7 @@ export default function Sculpture({ scene = "signal", palette = "copper", paused
     <div
       ref={containerRef}
       className="signal-sculpture"
+      onBlur={event => { delete event.currentTarget.dataset.focusInput; }}
       data-sculpture="armillary"
       data-render-state="loading"
       data-drag-hit="false"

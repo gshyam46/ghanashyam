@@ -5,9 +5,9 @@ export type ArmillaryScene = "signal" | "systems" | "practice" | "contact";
 
 const TAU = Math.PI * 2;
 const FINISHES = {
-  copper: { band: "#9e633c", edge: "#bd8a61", bearing: "#594333", engraving: "#492f21", ceramic: "#242825", signal: "#ffe0b1" },
-  silver: { band: "#a3b1b5", edge: "#d0dadf", bearing: "#53636a", engraving: "#465359", ceramic: "#20282d", signal: "#d6edfb" },
-  ink: { band: "#526252", edge: "#98a18b", bearing: "#36483c", engraving: "#aeb49d", ceramic: "#26342c", signal: "#c29b65" },
+  copper: { band: "#9e633c", edge: "#bd8a61", bearing: "#594333", engraving: "#492f21", ceramic: "#8c6948", coreLight: "#efb66f", signal: "#ffe0b1" },
+  silver: { band: "#a3b1b5", edge: "#d0dadf", bearing: "#53636a", engraving: "#465359", ceramic: "#75888e", coreLight: "#b5d6e6", signal: "#d6edfb" },
+  ink: { band: "#526252", edge: "#98a18b", bearing: "#36483c", engraving: "#aeb49d", ceramic: "#67715a", coreLight: "#d6c092", signal: "#c29b65" },
 } satisfies Record<ArmillaryPalette, Record<string, string>>;
 type Finish = keyof typeof FINISHES.copper;
 
@@ -170,8 +170,10 @@ export function createArmillary(compact: boolean, palette: ArmillaryPalette) {
   const etching = material(new THREE.MeshStandardMaterial({ metalness: .4, roughness: .65, envMapIntensity: .5 }), "engraving");
   const tracks = material(new THREE.LineBasicMaterial({ transparent: true, opacity: .29, depthWrite: false }), "engraving");
   const ceramic = material(new THREE.MeshPhysicalMaterial({
-    metalness: .06, roughness: .65, clearcoat: .035, clearcoatRoughness: .6, envMapIntensity: .3,
+    metalness: .22, roughness: .28, clearcoat: .48, clearcoatRoughness: .24, envMapIntensity: .65,
+    emissive: finishTargets[palette].coreLight, emissiveIntensity: .28,
   }), "ceramic");
+  changingColors.push({ color: ceramic.emissive, finish: "coreLight" });
   const signal = material(new THREE.MeshBasicMaterial({
     transparent: true, opacity: .65, vertexColors: true,
     blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false, side: THREE.DoubleSide,
@@ -269,12 +271,10 @@ export function createArmillary(compact: boolean, palette: ArmillaryPalette) {
   });
 
   const core = new THREE.Group();
-  core.name = "Dark ceramic reference core";
+  core.name = "Luminous reference core";
   core.rotation.set(.26, .18, -.15);
   pivots[pivots.length - 1].add(core);
   addMesh(core, geometry(new THREE.SphereGeometry(.51, compact ? 40 : 64, compact ? 26 : 40)), ceramic, "Ceramic centre");
-  const seam = addMesh(core, geometry(new THREE.TorusGeometry(.5095, .0028, 5, compact ? 96 : 144)), bearing, "Fine ceramic assembly seam");
-  seam.rotation.x = Math.PI / 2;
   addGimbal(pivots[pivots.length - 1], RINGS[RINGS.length - 1].radius, .54, "x", true);
 
   const signalCarrier = new THREE.Group();

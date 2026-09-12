@@ -151,12 +151,11 @@ function StaticSculpture({ palette }: { palette: PaletteName }) {
           <stop stopColor={dark} /><stop offset=".22" stopColor={highlight} /><stop offset=".46" stopColor={metal} /><stop offset=".72" stopColor={highlight} /><stop offset="1" stopColor={dark} />
         </linearGradient>
         <radialGradient id={`armillary-core-${id}`} cx=".32" cy=".26" r=".75">
-          <stop stopColor={ink ? "#60715f" : "#4c4b40"} /><stop offset=".48" stopColor={ink ? "#334634" : "#252923"} /><stop offset="1" stopColor={ink ? "#19291e" : "#101811"} />
+          <stop stopColor={ink ? "#e4d8b0" : silver ? "#e0f1f5" : "#ffe0b0"} /><stop offset=".35" stopColor={ink ? "#a9a782" : silver ? "#b0cbd3" : "#d0a575"} /><stop offset="1" stopColor={ink ? "#646b4f" : silver ? "#647d86" : "#896541"} />
         </radialGradient>
       </defs>
       <g strokeLinecap="round" strokeLinejoin="round">{drawArcs(false)}{drawTicks(false)}</g>
-      <circle cx="300" cy="300" r="50" fill={`url(#armillary-core-${id})`} stroke={dark} strokeWidth="2" />
-      <ellipse cx="300" cy="300" rx="49" ry="13" transform="rotate(-18 300 300)" stroke={metal} strokeWidth=".8" opacity=".65" />
+      <circle cx="300" cy="300" r="50" fill={`url(#armillary-core-${id})`} />
       <g strokeLinecap="round" strokeLinejoin="round">{drawArcs(true)}{drawTicks(true)}</g>
     </svg>
   );
@@ -229,7 +228,8 @@ export default function Sculpture({ scene = "signal", palette = "copper", paused
     sculpture.traverse(object => {
       if (object instanceof THREE.Mesh && /Bevelled satin|Ceramic centre/.test(object.name)) {
         object.castShadow = !compact;
-        object.receiveShadow = !compact;
+        // Keep the luminous core smooth; band shadows otherwise read as a seam.
+        object.receiveShadow = !compact && object.name !== "Ceramic centre";
       }
     });
     const raycaster = new THREE.Raycaster();
@@ -564,7 +564,7 @@ export default function Sculpture({ scene = "signal", palette = "copper", paused
       data-drag-hit="false"
       data-dragging="false"
       role="img"
-      aria-label={`A kinetic armillary with five nested metallic rings and a ceramic centre.${ready ? " Drag or use arrow keys to rotate; press R to reset." : ""}`}
+      aria-label={`A kinetic armillary with five nested metallic rings and a softly glowing centre.${ready ? " Drag or use arrow keys to rotate; press R to reset." : ""}`}
       tabIndex={ready ? 0 : -1}
       style={{ position: "absolute", inset: 0, cursor: "default", touchAction: "pan-y" }}
     >

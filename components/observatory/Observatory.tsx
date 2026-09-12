@@ -243,7 +243,7 @@ export default function Observatory() {
 
         <section className="chapter contact-section" id="contact" aria-labelledby="contact-title">
           <div className="section-topline"><p className="eyebrow"><span className="little-cross">+</span> 04 / AN OPEN CHANNEL</p><span className="section-note">GOOD THINGS START WITH A CONVERSATION</span></div>
-          <div className="contact-content"><p className="contact-kicker">HAVE SOMETHING INTERESTING IN MIND?</p><h2 id="contact-title">Let’s make<br /><em>something matter.</em><ArrowUpRight className="contact-arrow" /></h2><p className="contact-description">A system to untangle. An idea to bring to life.<br />A conversation about what comes next.</p>
+          <div className="contact-content"><p className="contact-kicker">HAVE SOMETHING INTERESTING IN MIND?</p><h2 id="contact-title">Let’s build<br /><em>together.</em><ArrowUpRight className="contact-arrow" /></h2><p className="contact-description">A system to untangle. An idea to bring to life.<br />A conversation about what comes next.</p>
             <div className="contact-buttons"><a href={profile.email ? `mailto:${profile.email}` : profile.linkedin} target={profile.email ? undefined : "_blank"} rel="noreferrer" className="primary-button">Start a conversation {profile.email ? <Mail size={18} /> : <ArrowUpRight size={18} />}</a><a className="social-button" href={profile.github} target="_blank" rel="noreferrer" aria-label="Ghanashyam on GitHub"><Github size={20} /></a><a className="social-button" href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="Ghanashyam on LinkedIn"><Linkedin size={20} /></a></div>
           </div>
           <ContactNote onOpenChange={setDialogOpen} onInteract={() => audio.chime(3)} />

@@ -1,6 +1,14 @@
 # Verification - 12 September 2026
 
-## Latest: kinetic armillary replacement
+## Latest: luminous core and contact headline
+
+The centre now has a softly luminous, glazed finish with palette-matched emission. Both the 3D assembly seam and the SVG seam are removed. The core no longer receives a hard band shadow; its shape still shades smoothly and casts a shadow on the surrounding instrument. The contact headline is the owner's chosen "Let’s build together."
+
+The production build and TypeScript passed. The existing armillary and drag-alignment production suites passed **12 checks in 49.6 seconds**, with two intentional device-specific skips. These cover motion, Pause, reduced motion, keyboard rotation/reset, ring hit-testing, native phone scrolling, and the static fallback. Desktop and phone production captures confirm the new headline and WebGL rendering with no captured page errors. Visual review also covered Copper, Ink, Silver, and the seam-free SVG fallback.
+
+Preview: **http://127.0.0.1:3001**. Updated images: [desktop core](screenshots/desktop-armillary-copper.png), [phone core](screenshots/mobile-armillary-copper.png), [desktop contact](screenshots/desktop-contact-refined.png), and [phone contact](screenshots/mobile-contact-refined.png). The verified source is mirrored to the prepared release checkout; publishing still awaits the previously requested GitHub and Vercel authentication.
+
+## Previous: kinetic armillary replacement
 
 The selected second concept is implemented as five bevelled copper bands with articulated bearings, calibration marks, a matte ceramic centre, and one travelling signal visible from either face of its band. The innermost gimbal completes a slow 125-second revolution. Other ring axes and the outer pose settle toward chapter-specific orientations. Mouse/touch drag has bounded inertia; explicit arrow-key rotation and R reset remain available with reduced motion. The static SVG uses the same initial ring transforms as WebGL.
 

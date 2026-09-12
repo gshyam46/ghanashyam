@@ -25,8 +25,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*.local
-.env
+.env*
+!.env.example
 
 # vercel
 .vercel
@@ -34,3 +34,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local build and browser verification artifacts
+/.npm-cache/
+/test-results/
+/test-results-*/
+/test-results-accessibility/
+/playwright-report/
+/.preview-*.log
+/.reference/
+
+# Personal source document; intentionally excluded from the website and commits.
+/resume/

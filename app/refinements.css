@@ -1,0 +1,203 @@
+/* A second, restrained pass: readability, dimensional motion, and touch layouts. */
+.observatory .eyebrow { font-size: 11px; }
+.observatory .section-note { font-size: 9px; }
+.observatory .hero-description p { font-size: 15px; }
+.observatory .round-link, .observatory .text-link { font-size: 13px; }
+.observatory .mini-count { font-size: 10px; }
+.observatory .project-story .eyebrow { font-size: 10px; }
+.observatory .project-description { font-size: 14px; line-height: 1.85; }
+.observatory .project-tags > span { font-size: 10px; }
+.observatory .work-heading > p { font-size: 13px; }
+.observatory .practice-intro > p { font-size: 14px; }
+.observatory .principle-body p { font-size: 14px; }
+.observatory .principle-body > span { font-size: 9px; }
+.observatory .experience-heading .eyebrow, .observatory .experience-period { font-size: 10px; }
+.observatory .experience-item p { font-size: 12px; }
+.observatory .experience-detail { font-size: 12px; line-height: 1.75; }
+.observatory .section-footnote { font-size: 9px; line-height: 1.7; }
+.observatory .footer-location { font-size: 9px; }
+.observatory .chapter-nav a { font-size: 11px; min-height: 38px; }
+.observatory .chapter-digit { font-size: 9px; }
+.observatory .sound-button { font-size: 9px; }
+.observatory .settings-trigger { min-width: 40px; min-height: 44px; }
+.observatory .contact-description { font-size: 14px; }
+.observatory .contact-kicker { font-size: 10px; }
+.observatory .hero-bottom > span:first-child { font-size: 9px; }
+.observatory .hero-note { font-size: 12px; }
+.observatory .edition { font-size: 10px; min-height: 44px; }
+.observatory .identity span span { font-size: 10px; }
+.observatory .dialog-top .eyebrow, .observatory .dialog-footnote { font-size: 10px; }
+.observatory .settings-dialog .dialog-footnote { color: var(--muted); }
+.observatory .settings-description { font-size: 14px; }
+.observatory .material-description strong { font-size: 14px; }
+.observatory .material-description > span { font-size: 12px; }
+.observatory .setting-row strong { font-size: 14px; }
+.observatory .setting-row > div > span { font-size: 12px; }
+.observatory .toggle-button { font-size: 12px; min-height: 42px; }
+.observatory .volume-control { font-size: 11px; }
+.observatory .volume-control input { height: 24px; }
+.observatory .signoff { font-size: 9px; }
+.observatory .signoff button { font-size: 11px; min-height: 40px; }
+.observatory .treatment-options legend { font-size: 10px; }
+.observatory .inspection-detail { font-size: 14px; }
+.observatory .inspection-heading .eyebrow { font-size: 10px; }
+.observatory .inspection-bottom .text-link { font-size: 12px; }
+.observatory .sculpture-layer { translate: 0 var(--atmosphere-scroll-lift, 0px); }
+.observatory .hero-copy { translate: 0 calc(var(--atmosphere-scroll-lift, 0px) * .3); }
+.observatory .hero-copy { pointer-events: none; }
+.observatory .hero-copy h1, .observatory .hero-description p { pointer-events: auto; width: fit-content; max-width: 100%; }
+.observatory .practice-toolkit > div { grid-template-columns: 132px 1fr; }
+.observatory .artifact-caption { translate: 0 calc(var(--atmosphere-scroll-lift, 0px) * -.25); }
+.mobile-art-space { display: none; }
+[data-reveal] { transition: opacity .8s ease, translate .9s cubic-bezier(.16,1,.3,1); }
+[data-reveal="pending"] { opacity: 0; translate: 0 18px; }
+[data-reveal="departed"] { opacity: 0; translate: 0 -12px; }
+[data-reveal="shown"] { opacity: 1; translate: 0 0; }
+[data-reveal]:focus-within { opacity: 1; translate: none; }
+.observatory[data-motion="still"] [data-reveal] { opacity: 1; translate: none; }
+.observatory .experience-dialog .dialog-top { position: sticky; top: -1px; z-index: 3; background: var(--panel); padding-bottom: 9px; }
+.observatory .close-button { min-width: 42px; min-height: 42px; }
+.observatory .career-contribution li { font-size: 14px; }
+.observatory .career-tools > div > span { font-size: 10px; }
+.observatory .career-pagination button { width: 44px; height: 44px; }
+.observatory .demo-tiny, .observatory .demo-section-label { font-size: 9px; }
+.observatory .demo-description { font-size: 12px; }
+.observatory .demo-model-label { font-size: 9px; }
+.observatory .demo-trace-explanation p { font-size: 11px; }
+.observatory .demo-signal strong { font-size: 12px; }
+.observatory .demo-signal small { font-size: 10px; }
+.observatory .demo-bottom-bar { font-size: 8px; }
+.observatory .demo-stage { min-height: 44px; }
+.observatory .demo-trace-row { min-height: 40px; }
+.observatory .demo-query-field > label { font-size: 10px; }
+.observatory .demo-table :is(th,td) { font-size: 12px; }
+/* Keep focused and programmatically revealed exhibit controls clear of the
+   persistent header and bottom navigation. */
+.observatory .project-exhibit :is(button, input, [tabindex]),
+.observatory .project-tabs > button { scroll-margin-block: 128px 104px; }
+@media(min-width:901px) and (max-width:1100px) {
+  .observatory .edition { display: none; }
+  .observatory .footer-location { font-size: 8px; }
+  .observatory .chapter-nav a { padding-inline: 10px; }
+  .observatory .experience-detail { font-size: 11px; }
+  .observatory .experience-item p { font-size: 11px; }
+}
+@media(max-width:900px) {
+  .observatory { --page-padding: clamp(22px, 5.7vw, 36px); }
+  .observatory .site-header { height: calc(88px + env(safe-area-inset-top, 0px)); padding-inline: var(--page-padding); padding-top: env(safe-area-inset-top, 0px); }
+  .observatory .identity span span { font-size: 8px; }
+  .observatory .edition, .observatory .footer-location { display: none; }
+  .observatory .index-trigger { min-height: 44px; font-size: 12px; }
+  .observatory .signal-section { display: block; min-height: 100svh; padding-top: calc(137px + env(safe-area-inset-top, 0px)); padding-bottom: 150px; }
+  .observatory .hero-copy { max-width: 100%; width: 100%; translate: none; }
+  .observatory .hero-copy > .eyebrow { font-size: 9px; letter-spacing: .035em; margin-bottom: 28px; }
+  .observatory h1 { font-size: clamp(44px, 12.5vw, 82px); line-height: 1.08; }
+  .observatory .hero-description { margin-top: 26px; gap: 13px; }
+  .observatory .hero-description .text-rule { width: 20px; }
+  .observatory .hero-description p { font-size: 14px; line-height: 1.8; max-width: 390px; }
+  .observatory .desktop-break { display: none; }
+  .observatory .hero-cta { margin-top: 25px; }
+  .observatory .circle-button { width: 48px; height: 48px; }
+  .mobile-art-space { display: block; height: clamp(265px, 40vh, 320px); }
+  .observatory .sculpture-layer { position: absolute; top: var(--mobile-art-top, 460px); left: 0; width: 100%; height: clamp(265px, 40vh, 320px); translate: none; }
+  .observatory .sculpture-layer:not([data-scene="signal"]) { opacity: 0; visibility: hidden; transform: none; }
+  .observatory .artifact-interaction { display: none; }
+  .observatory .hero-bottom { bottom: 109px; padding-top: 17px; }
+  .observatory .hero-bottom > span:first-child { font-size: 8px; letter-spacing: .015em; gap: 11px; flex-wrap: wrap; line-height: 1.9; }
+  .observatory .hero-note { display: none; }
+  .observatory .experience-bar { height: calc(78px + env(safe-area-inset-bottom, 0px)); padding: 0 var(--page-padding) env(safe-area-inset-bottom, 0px); gap: 10px; }
+  .observatory .chapter-nav { flex: 1; position: static; transform: none; justify-content: space-between; max-width: 325px; padding: 4px; min-width: 0; }
+  .observatory .chapter-nav a { padding: 10px 9px; font-size: 11px; gap: 6px; min-width: 44px; min-height: 44px; justify-content: center; }
+  .observatory .chapter-digit { font-size: 9px; }
+  .observatory .experience-controls { gap: 9px; }
+  .observatory .sound-button { min-width: 37px; min-height: 44px; justify-content: center; }
+  .observatory .sound-button > span:last-child { display: none; }
+  .observatory .sound-bars { width: 20px; gap: 3px; }
+  .observatory .sound-bars i { height: 5px; }
+  .observatory .settings-trigger { padding-left: 11px; min-width: 37px; }
+  .observatory .chapter:not(.signal-section) { padding-top: 111px; padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px)); min-height: auto; }
+  .observatory .section-topline .eyebrow { font-size: 10px; }
+  .observatory .work-heading h2 { font-size: clamp(35px, 8.3vw, 57px); }
+  .observatory .work-heading p { font-size: 13px; }
+  .observatory .project-tabs { gap: 14px; }
+  .observatory .project-tabs > button { min-height: 58px; font-size: 12px; gap: 7px; white-space: normal; line-height: 1.5; }
+  .observatory .project-tabs > button > span { font-size: 9px; flex-shrink: 0; }
+  .observatory .project-story h3 { font-size: clamp(26px, 6.7vw, 36px); }
+  .observatory .project-exhibit { display: flex; flex-direction: column; align-items: stretch; gap: 30px; }
+  .observatory .project-preview { width: 100%; }
+  .observatory .practice-layout { display: block; }
+  .observatory .principles { margin-top: 42px; }
+  .observatory .project-story .eyebrow { font-size: 9px; }
+  .observatory .project-description { font-size: 14px; }
+  .observatory .project-tags > span { font-size: 10px; }
+  .observatory .practice-intro h2 { font-size: clamp(35px, 8.5vw, 56px); }
+  .observatory .principle button { min-height: 65px; font-size: 17px; gap: 15px; }
+  .observatory .principle-body { padding-left: 27px; padding-right: 8px; }
+  .observatory .experience-list { grid-template-columns: 1fr 1fr; gap: 28px 22px; }
+  .observatory .experience-item, .observatory .experience-item + .experience-item { padding-inline: 0; }
+  .observatory .experience-item + .experience-item::before { display: none; }
+  .observatory .experience-period { font-size: 10px; line-height: 1.8; display: block; }
+  .observatory .experience-item h3 { font-size: 21px; margin-top: 12px; }
+  .observatory .experience-item p { font-size: 12px; }
+  .observatory .experience-detail { font-size: 12px; }
+  .observatory .experience-inspect { min-height: 44px; font-size: 12px; margin-top: 10px; }
+  .observatory .practice-toolkit > div { grid-template-columns: 101px 1fr; }
+  .observatory .practice-toolkit dt { font-size: 9px; }
+  .observatory .practice-toolkit dd { font-size: 12px; }
+  .observatory .experience-dialog { width: calc(100vw - 24px); max-height: calc(100dvh - 24px); margin: auto; }
+  .observatory .experience-dialog .dialog-inner { padding: 24px; }
+  .observatory .experience-dialog .dialog-top .eyebrow { font-size: 9px; }
+  .observatory .experience-dialog .dialog-top { margin-bottom: 20px; }
+  .observatory .experience-dialog h2 { font-size: clamp(30px, 7.7vw, 40px); }
+  .observatory .career-dialog #career-title { font-size: clamp(28px, 7.7vw, 42px); overflow-wrap: anywhere; }
+  .observatory .dialog-footnote { font-size: 9px; }
+  .observatory .contact-section .section-topline { margin-bottom: 45px; }
+  .observatory .contact-content h2 { font-size: clamp(39px, 10.8vw, 69px); }
+  .observatory .contact-arrow { display: none; }
+  .observatory .contact-kicker { font-size: 9px; line-height: 1.7; }
+  .observatory .contact-buttons { gap: 10px; }
+  .observatory .contact-buttons .primary-button { gap: 22px; font-size: 12px; min-height: 51px; padding-inline: 17px; }
+  .observatory .social-button { min-width: 45px; width: 45px; }
+  .observatory .signoff { font-size: 9px; }
+  .observatory .signoff button { font-size: 10px; }
+  .observatory .note-topic > span:first-child { flex-shrink: 0; }
+  .observatory .note-topic > .observatory-select { flex: 1; min-width: 0; }
+  .observatory .demo-appbar { padding: 15px; gap: 9px; }
+  .observatory .demo-subtitle { font-size: 10px; }
+  .observatory .demo-stage { min-height: 46px; }
+  .observatory .demo-trace-row { min-height: 43px; }
+  .observatory .demo-trace-name { font-size: 10px; }
+  .observatory .demo-model-label { font-size: 8px; }
+  .observatory .demo-bottom-bar { font-size: 8px; line-height: 1.7; }
+}
+@media(max-width:359px) {
+  .observatory .experience-list { grid-template-columns: 1fr; gap: 15px; }
+  .observatory .experience-item { border-top: 1px solid var(--line); padding-top: 20px; }
+  .observatory .experience-detail { max-width: none; }
+  .observatory .chapter-nav a { padding-inline: 7px; gap: 5px; min-width: 44px; font-size: 10px; }
+  .observatory .chapter-nav .chapter-name { display: none; }
+  .observatory .experience-controls { gap: 5px; }
+  .observatory .sound-button { min-width: 31px; }
+  .observatory .project-tabs { gap: 11px; }
+  .observatory .project-tabs > button { font-size: 11px; }
+  .observatory .project-tabs > button > span { font-size: 8px; }
+  .observatory .contact-buttons .primary-button { font-size: 11px; gap: 15px; padding-inline: 12px; }
+  .observatory .social-button { width: 42px; min-width: 42px; }
+  .observatory .career-dialog #career-title > span { display: none; }
+}
+@media(max-height:550px) and (orientation:landscape) {
+  .observatory .site-header { height: 72px; }
+  .observatory .experience-bar { height: 64px; }
+  .observatory .signal-section { min-height: 640px; padding-top: 105px; }
+  .observatory h1 { font-size: 62px; }
+  .observatory .chapter:not(.signal-section) { padding-top: 100px; }
+  .observatory .experience-dialog { max-height: calc(100dvh - 20px); }
+  .observatory .footer-location { display: none; }
+  .observatory .chapter-nav { position: static; transform: none; }
+  .observatory .contact-content h2 { font-size: 62px; }
+}
+@media(pointer:coarse) {
+  .observatory .note-form textarea, .observatory .note-form input { font-size: 16px; }
+  .observatory .note-topic > .observatory-select { flex: 1; min-width: 0; }
+}
+@media(prefers-reduced-motion:reduce) { [data-reveal] { opacity: 1; translate: none; } }

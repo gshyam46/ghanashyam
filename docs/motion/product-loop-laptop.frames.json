@@ -1,0 +1,387 @@
+{
+  "viewport": "1366x650",
+  "longestCircuitMs": 11200,
+  "recordedMs": 35158,
+  "frames": [
+    {
+      "name": "idea",
+      "elapsedMs": 5915,
+      "expansion": "0.000",
+      "flow": "still",
+      "scroll": 2594,
+      "application": {
+        "width": 220,
+        "height": 136,
+        "centerX": 683,
+        "centerY": 253.125,
+        "opacity": 1
+      },
+      "packets": []
+    },
+    {
+      "name": "reveal",
+      "elapsedMs": 7322,
+      "expansion": "0.251",
+      "flow": "still",
+      "scroll": 2663,
+      "application": {
+        "width": 140.181396484375,
+        "height": 86.65757751464844,
+        "centerX": 683,
+        "centerY": 214.98999786376953,
+        "opacity": 1
+      },
+      "packets": []
+    },
+    {
+      "name": "flow-start",
+      "elapsedMs": 8657,
+      "expansion": "0.518",
+      "flow": "running",
+      "scroll": 2736,
+      "application": {
+        "width": 52.009033203125,
+        "height": 32.15106201171875,
+        "centerX": 683,
+        "centerY": 173,
+        "opacity": 1
+      },
+      "packets": [
+        {
+          "edge": "services-agents",
+          "direction": "response",
+          "x": 330.5668640136719,
+          "y": 188.92047119140625
+        },
+        {
+          "edge": "api-services",
+          "direction": "request",
+          "x": 341.70245361328125,
+          "y": 160.43919372558594
+        },
+        {
+          "edge": "retrieval-vectors",
+          "direction": "response",
+          "x": 287.52923583984375,
+          "y": 264.390380859375
+        },
+        {
+          "edge": "events-queue",
+          "direction": "request",
+          "x": 633.98828125,
+          "y": 160.43919372558594
+        },
+        {
+          "edge": "queue-workers",
+          "direction": "response",
+          "x": 625.844970703125,
+          "y": 215.8505096435547
+        },
+        {
+          "edge": "agents-tools",
+          "direction": "request",
+          "x": 567.412841796875,
+          "y": 188.92047119140625
+        },
+        {
+          "edge": "identity-api",
+          "direction": "request",
+          "x": 287.8610534667969,
+          "y": 131.95791625976562
+        },
+        {
+          "edge": "services-data",
+          "direction": "request",
+          "x": 250.77101135253906,
+          "y": 188.9204864501953
+        },
+        {
+          "edge": "services-cache",
+          "direction": "response",
+          "x": 410,
+          "y": 287.86614990234375
+        }
+      ]
+    },
+    {
+      "name": "live-0",
+      "elapsedMs": 9744,
+      "expansion": "0.781",
+      "flow": "running",
+      "scroll": 2808,
+      "application": {
+        "width": 52,
+        "height": 32.14544677734375,
+        "centerX": 683,
+        "centerY": 173,
+        "opacity": 1
+      },
+      "packets": [
+        {
+          "edge": "api-services",
+          "direction": "response",
+          "x": 410,
+          "y": 148.12779235839844
+        },
+        {
+          "edge": "services-agents",
+          "direction": "request",
+          "x": 387.8397216796875,
+          "y": 188
+        },
+        {
+          "edge": "agents-retrieval",
+          "direction": "response",
+          "x": 449.6005554199219,
+          "y": 224.00001525878906
+        },
+        {
+          "edge": "queue-workers",
+          "direction": "request",
+          "x": 697,
+          "y": 223.33544921875
+        },
+        {
+          "edge": "events-queue",
+          "direction": "response",
+          "x": 697,
+          "y": 156.18455505371094
+        },
+        {
+          "edge": "agents-tools",
+          "direction": "request",
+          "x": 578.0999755859375,
+          "y": 283.92236328125
+        },
+        {
+          "edge": "identity-api",
+          "direction": "response",
+          "x": 378.607421875,
+          "y": 116
+        },
+        {
+          "edge": "services-data",
+          "direction": "request",
+          "x": 98.97330474853516,
+          "y": 188
+        },
+        {
+          "edge": "services-cache",
+          "direction": "response",
+          "x": 356.70001220703125,
+          "y": 206.31597900390625
+        }
+      ]
+    },
+    {
+      "name": "live-1",
+      "elapsedMs": 18225,
+      "expansion": "0.781",
+      "flow": "running",
+      "scroll": 2808,
+      "application": {
+        "width": 52,
+        "height": 32.14544677734375,
+        "centerX": 683,
+        "centerY": 173,
+        "opacity": 1
+      },
+      "packets": [
+        {
+          "edge": "agents-models",
+          "direction": "response",
+          "x": 467.3999938964844,
+          "y": 234.2826385498047
+        },
+        {
+          "edge": "frontend-api",
+          "direction": "response",
+          "x": 410,
+          "y": 72.9921646118164
+        },
+        {
+          "edge": "agents-retrieval",
+          "direction": "request",
+          "x": 246.53541564941406,
+          "y": 224
+        },
+        {
+          "edge": "queue-workers",
+          "direction": "request",
+          "x": 697,
+          "y": 218.60569763183594
+        },
+        {
+          "edge": "events-queue",
+          "direction": "response",
+          "x": 697,
+          "y": 160.914306640625
+        },
+        {
+          "edge": "agents-tools",
+          "direction": "response",
+          "x": 578.0999755859375,
+          "y": 288.7223815917969
+        },
+        {
+          "edge": "identity-api",
+          "direction": "response",
+          "x": 242.01853942871094,
+          "y": 116
+        },
+        {
+          "edge": "services-data",
+          "direction": "request",
+          "x": 177.4580078125,
+          "y": 188.00001525878906
+        },
+        {
+          "edge": "services-cache",
+          "direction": "response",
+          "x": 356.70001220703125,
+          "y": 222.74539184570312
+        }
+      ]
+    },
+    {
+      "name": "live-2",
+      "elapsedMs": 26694,
+      "expansion": "0.781",
+      "flow": "running",
+      "scroll": 2808,
+      "application": {
+        "width": 52,
+        "height": 32.14544677734375,
+        "centerX": 683,
+        "centerY": 173,
+        "opacity": 1
+      },
+      "packets": [
+        {
+          "edge": "retrieval-vectors",
+          "direction": "response",
+          "x": 246,
+          "y": 293.6067810058594
+        },
+        {
+          "edge": "agents-models",
+          "direction": "response",
+          "x": 467.3999938964844,
+          "y": 216.0949249267578
+        },
+        {
+          "edge": "api-services",
+          "direction": "request",
+          "x": 409.9662170410156,
+          "y": 152.00001525878906
+        },
+        {
+          "edge": "queue-workers",
+          "direction": "request",
+          "x": 697,
+          "y": 214.5516357421875
+        },
+        {
+          "edge": "queue-workers",
+          "direction": "response",
+          "x": 697,
+          "y": 214.96836853027344
+        },
+        {
+          "edge": "agents-tools",
+          "direction": "response",
+          "x": 578.0999755859375,
+          "y": 259.9607849121094
+        },
+        {
+          "edge": "identity-api",
+          "direction": "request",
+          "x": 194.84913635253906,
+          "y": 116
+        },
+        {
+          "edge": "services-data",
+          "direction": "response",
+          "x": 189.62965393066406,
+          "y": 188.00001525878906
+        },
+        {
+          "edge": "services-cache",
+          "direction": "response",
+          "x": 356.70001220703125,
+          "y": 235.0735626220703
+        }
+      ]
+    },
+    {
+      "name": "live-3",
+      "elapsedMs": 35158,
+      "expansion": "0.781",
+      "flow": "running",
+      "scroll": 2808,
+      "application": {
+        "width": 52,
+        "height": 32.14544677734375,
+        "centerX": 683,
+        "centerY": 173,
+        "opacity": 1
+      },
+      "packets": [
+        {
+          "edge": "services-agents",
+          "direction": "request",
+          "x": 304.0067443847656,
+          "y": 188
+        },
+        {
+          "edge": "retrieval-vectors",
+          "direction": "response",
+          "x": 246,
+          "y": 285.8742980957031
+        },
+        {
+          "edge": "api-services",
+          "direction": "response",
+          "x": 255.9382781982422,
+          "y": 152
+        },
+        {
+          "edge": "events-queue",
+          "direction": "request",
+          "x": 697,
+          "y": 159.48809814453125
+        },
+        {
+          "edge": "queue-workers",
+          "direction": "response",
+          "x": 697,
+          "y": 220.0319061279297
+        },
+        {
+          "edge": "agents-tools",
+          "direction": "response",
+          "x": 578.0999755859375,
+          "y": 235.98959350585938
+        },
+        {
+          "edge": "identity-api",
+          "direction": "request",
+          "x": 329.32421875,
+          "y": 116
+        },
+        {
+          "edge": "services-data",
+          "direction": "response",
+          "x": 109.38017272949219,
+          "y": 188
+        },
+        {
+          "edge": "services-cache",
+          "direction": "response",
+          "x": 356.70001220703125,
+          "y": 253.5290069580078
+        }
+      ]
+    }
+  ]
+}

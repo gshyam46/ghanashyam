@@ -1,0 +1,60 @@
+.observatory #systems { padding-bottom: 44px; }
+.observatory #practice { padding-top: 76px; padding-bottom: 48px; }
+.observatory #contact { padding-top: 80px; }
+.technology-marquee { padding: 12px var(--page-padding) 28px; position: relative; pointer-events: auto; scroll-margin-top: 130px; }
+.technology-heading { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 12px; }
+.technology-heading h3 { font-weight: 400; color: var(--muted); }
+.technology-pause { display: flex; gap: 8px; align-items: center; justify-content: center; min-width: 72px; min-height: 44px; color: var(--muted); font: 9px var(--mono); letter-spacing: .06em; }
+.technology-pause:hover { color: var(--text); }
+.technology-bands { margin-inline: calc(-1 * var(--page-padding)); overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+.technology-lane { overflow: hidden; padding-block: 5px; cursor: grab; touch-action: pan-y pinch-zoom; user-select: none; }
+.technology-track, .technology-group { display: flex; width: max-content; align-items: center; flex-shrink: 0; }
+.technology-track { will-change: transform; }
+.technology-word { display: inline-flex; align-items: center; gap: .42em; padding-right: .42em; white-space: nowrap; font-size: clamp(26px, 3vw, 44px); font-weight: 780; line-height: 1.12; letter-spacing: -.055em; color: #9b9e9a; opacity: .4; transition: opacity .25s, translate .3s; }
+.technology-word i { font-size: .58em; font-style: normal; opacity: .55; }
+.technology-word:hover { opacity: .85; translate: 0 -3px; }
+.technology-marquee[data-dragging="true"] .technology-lane { cursor: grabbing; }
+.technology-marquee[data-still="true"] .technology-lane { cursor: default; }
+.technology-marquee[data-running="false"] .technology-track { will-change: auto; }
+.observatory[data-palette="ink"] .technology-word { color: #555b55; opacity: .42; }
+.observatory[data-palette="ink"] .technology-word:hover { opacity: .88; }
+.technology-footer { margin-top: 14px; display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; position: relative; }
+.technology-hint { display: flex; flex-direction: column; gap: 7px; color: var(--muted); font: 8px/1.7 var(--mono); letter-spacing: .08em; padding-block: 12px; }
+.technology-hint .technology-touch-hint { display: none; }
+.technology-index { max-width: 68%; }
+.technology-index summary { list-style: none; cursor: pointer; display: flex; gap: 18px; align-items: center; justify-content: flex-end; min-height: 44px; font-size: 12px; color: var(--muted); }
+.technology-index summary::-webkit-details-marker { display: none; }
+.technology-index summary:hover { color: var(--text); }
+.technology-index[open] summary svg { rotate: 45deg; }
+.technology-index-content { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 23px 34px; padding-block: 24px; border-top: 1px solid var(--line); }
+.technology-index h4 { margin: 0 0 8px; color: var(--text); font-size: 12px; font-weight: 600; }
+.technology-index p { color: var(--muted); font-size: 12px; line-height: 1.8; }
+@media (max-width: 700px) {
+  .observatory #systems { padding-bottom: 32px; }
+  .observatory #practice { padding-top: 58px; padding-bottom: 30px; }
+  .observatory #contact { padding-top: 68px; }
+  .technology-marquee { padding-block: 8px 18px; }
+  .technology-heading { margin-bottom: 15px; }
+  .technology-heading .eyebrow { font-size: 9px; }
+  .technology-footer { flex-wrap: wrap; gap: 4px; margin-top: 18px; }
+  .technology-hint { font-size: 7px; }
+  .technology-index { max-width: 100%; flex: 1; min-width: 132px; }
+  .technology-index[open] { flex-basis: 100%; }
+  .technology-index summary { font-size: 11px; gap: 10px; }
+  .technology-index-content { gap: 20px; }
+}
+@media (pointer: coarse) {
+  .technology-hint .technology-mouse-hint { display: none; }
+  .technology-hint .technology-touch-hint { display: inline; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .technology-track { will-change: auto; }
+  .technology-word { transition: none; }
+  .technology-word:hover { translate: none; }
+  .technology-hint { display: none; }
+}
+@media print {
+  .technology-bands, .technology-hint, .technology-pause { display: none; }
+  .technology-index { max-width: none; }
+  .technology-index-content { display: grid !important; }
+}

@@ -1,0 +1,18 @@
+.atmosphere-field {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: .82;
+  transition: opacity 1s;
+}
+.atmosphere-field[data-scene="systems"] { opacity: .55; }
+.atmosphere-field[data-scene="practice"] { opacity: .64; }
+.atmosphere-field[data-scene="contact"] { opacity: .85; }
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .atmosphere-field { opacity: .5; transition: none; }
+}
+@media print { .atmosphere-field { display: none !important; } }

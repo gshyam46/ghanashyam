@@ -1,0 +1,20 @@
+.loading-screen { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; background: var(--bg); color: var(--text); opacity: 1; transition: opacity .5s ease, visibility .5s; animation: loading-screen-release 0s 6.5s forwards; }
+.loading-screen[data-state="leaving"] { opacity: 0; visibility: hidden; pointer-events: none; animation: none; }
+.loading-screen-center { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 24px; }
+.loading-screen-mark { width: 57px; height: 57px; margin-bottom: 29px; color: var(--accent); stroke: currentColor; stroke-width: .85; }
+.loading-screen-mark circle { fill: currentColor; stroke: none; }
+.loading-screen-center strong { font: 550 12px/1.6 "Manrope Variable", sans-serif; letter-spacing: .19em; }
+.loading-screen-center > span { margin-top: 10px; font: 10px/1.6 var(--mono); color: var(--muted); }
+.loading-screen-rule { width: 72px; height: 1px; margin-top: 28px; background: var(--line); position: relative; overflow: hidden; }
+.loading-screen-rule::after { content: ""; position: absolute; width: 24px; height: 1px; left: 24px; background: var(--accent); animation: loading-screen-breathe 1.4s ease-in-out infinite; }
+.loading-screen-skip { position: absolute; bottom: max(28px, env(safe-area-inset-bottom, 0px)); left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 14px; min-height: 44px; padding: 12px 14px; white-space: nowrap; font: 10px/1.6 var(--mono); color: var(--muted); }
+.loading-screen-skip > span { color: var(--accent); font-size: 15px; }
+.loading-screen-skip:hover { color: var(--text); }
+@keyframes loading-screen-breathe { 0%, 100% { opacity: .25; transform: scaleX(.5); } 50% { opacity: .85; transform: scaleX(1); } }
+/* A failed or disabled client script must not leave a permanent cover. */
+@keyframes loading-screen-release { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .loading-screen { transition: none; }
+  .loading-screen-rule::after { animation: none; opacity: .7; }
+}
+@media print { .loading-screen { display: none; } }

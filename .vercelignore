@@ -1,0 +1,17 @@
+.git
+.next
+node_modules
+.npm-cache
+.reference
+.vscode
+resume
+docs
+tests
+scripts
+test-results*
+playwright-report
+playwright*.config.ts
+.preview-*.log
+.env*
+!.env.example
+*.tsbuildinfo

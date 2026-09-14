@@ -230,7 +230,7 @@ export default function EnergyFlux({ paused, palette }: EnergyFluxProps) {
             {[0, 1, 2, 3].map(pulse => <path key={pulse} className="energy-flux-pulse" opacity="0" />)}
           </g>
         </svg>
-        <span className="energy-flux-caption" aria-hidden="true"><span><i /> IN THE FLOW</span><span className="energy-flux-invitation"><span className="energy-flux-mouse">MOVE TO BEND · CLICK TO SEND</span><span className="energy-flux-touch">TOUCH THE CURRENT</span><span className="energy-flux-keyboard">PRESS ENTER TO SEND A PULSE</span><span className="energy-flux-still">A STILL MOMENT</span><b>↗</b></span></span>
+        <span className="energy-flux-caption" aria-hidden="true"><span><i /> IN THE FLOW</span><span className="energy-flux-invitation"><span className="energy-flux-mouse">MOVE TO BEND · CLICK TO SEND</span><span className="energy-flux-touch">TOUCH THE CURRENT</span><span className="energy-flux-keyboard">PRESS ENTER TO SEND A PULSE</span><span className="energy-flux-still">A STILL MOMENT</span><b>↗︎</b></span></span>
       </button>
       <span className="energy-flux-description" id={`${id}-hint`}>Intertwined light follows your pointer. Click, tap, or press Enter to send a pulse. Motion follows your accessibility and experience settings.</span>
     </div>

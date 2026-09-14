@@ -51,7 +51,7 @@ function RelayDemo({ onInteract }: Pick<ProjectDemoProps, "onInteract">) {
         ))}
       </div>
       <div className="demo-relay-record">
-        <div className="demo-company-mark" aria-hidden="true">k<span>↗</span></div>
+        <div className="demo-company-mark" aria-hidden="true">k<span>↗︎</span></div>
         <div><strong>Kestrel</strong><span>Example company · developer infrastructure</span></div>
         <span className="demo-record-code">AC—014</span>
       </div>

@@ -100,7 +100,7 @@ export default function LoadingScreen() {
       <span>Preparing the observatory</span>
       <i className="loading-screen-rule" aria-hidden="true" />
     </div>
-    <button className="loading-screen-skip" onClick={() => finishRef.current?.("skipped")} tabIndex={state === "leaving" ? -1 : 0}>Continue to the portfolio <span aria-hidden="true">↗</span></button>
+    <button className="loading-screen-skip" onClick={() => finishRef.current?.("skipped")} tabIndex={state === "leaving" ? -1 : 0}>Continue to the portfolio <span aria-hidden="true">↗︎</span></button>
     <noscript><style>{`.loading-screen{display:none!important}`}</style></noscript>
   </div>;
 }

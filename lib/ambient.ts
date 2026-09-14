@@ -3,8 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const DEFAULT_VOLUME = 30;
-// Compensate for the 35% → 30% master change: the default interaction peak rises 8%.
-const INTERACTION_PEAK = 0.024 * (35 / DEFAULT_VOLUME) * 1.08;
+// Touch chimes must read as a clear foreground accent over the ambient bed, not blend into it.
+const INTERACTION_PEAK = 0.08;
 
 /** An original, quiet D-major soundscape. No media files or third-party audio. */
 export function useAmbientSound() {
@@ -35,7 +35,7 @@ export function useAmbientSound() {
       oscillator.frequency.value = frequency;
       oscillator.detune.value = index % 2 === 0 ? -3 : 3;
       const voice = ctx.createGain();
-      voice.gain.value = index === 0 ? 0.09 : 0.035;
+      voice.gain.value = index === 0 ? 0.055 : 0.02;
       const breath = ctx.createOscillator();
       breath.frequency.value = 0.025 + index * 0.011;
       const depth = ctx.createGain();
@@ -46,6 +46,11 @@ export function useAmbientSound() {
       voice.connect(filter);
       oscillator.start();
       breath.start();
+    });
+    // Mobile browsers can drop a running context back to suspended/interrupted on their own
+    // (audio-session interruptions, backgrounding); reclaim it without waiting for another tap.
+    ctx.addEventListener("statechange", () => {
+      if (enabledRef.current && !document.hidden && ctx.state !== "running") void ctx.resume().catch(() => {});
     });
     context.current = ctx;
     master.current = output;

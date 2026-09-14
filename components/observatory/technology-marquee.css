@@ -10,7 +10,7 @@
 .technology-lane { overflow: hidden; padding-block: 5px; cursor: grab; touch-action: pan-y pinch-zoom; user-select: none; }
 .technology-track, .technology-group { display: flex; width: max-content; align-items: center; flex-shrink: 0; }
 .technology-track { will-change: transform; }
-.technology-word { display: inline-flex; align-items: center; gap: .42em; padding-right: .42em; white-space: nowrap; font-size: clamp(26px, 3vw, 44px); font-weight: 780; line-height: 1.12; letter-spacing: -.055em; color: #9b9e9a; opacity: .4; transition: opacity .25s, translate .3s; }
+.technology-word { display: inline-flex; align-items: center; gap: .42em; padding-right: .42em; white-space: nowrap; font-size: clamp(26px, 3vw, 44px); font-weight: 780; line-height: 1.12; letter-spacing: -.055em; color: #9b9e9a; opacity: .62; transition: opacity .25s, translate .3s; }
 .technology-word i { font-size: .58em; font-style: normal; opacity: .55; }
 .technology-word:hover { opacity: .85; translate: 0 -3px; }
 .technology-marquee[data-dragging="true"] .technology-lane { cursor: grabbing; }

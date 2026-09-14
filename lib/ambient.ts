@@ -13,9 +13,10 @@ export function useAmbientSound() {
   const [volume, setVolume] = useState(DEFAULT_VOLUME);
   const context = useRef<AudioContext | null>(null);
   const master = useRef<GainNode | null>(null);
+  const chimeOutput = useRef<GainNode | null>(null);
   const enabledRef = useRef(false);
   const volumeRef = useRef(DEFAULT_VOLUME);
-  const lastTone = useRef(0);
+  const lastTone = useRef(-1);
 
   const initialize = useCallback(() => {
     if (context.current) return context.current;
@@ -28,6 +29,12 @@ export function useAmbientSound() {
     filter.frequency.value = 1200;
     filter.connect(output);
     output.connect(ctx.destination);
+    // Touch chimes have their own path straight to the speakers: they play by default and stay
+    // audible even while the ambient bed above is off, instead of being muted along with it.
+    const chimeGain = ctx.createGain();
+    chimeGain.gain.value = 1;
+    chimeGain.connect(ctx.destination);
+    chimeOutput.current = chimeGain;
     // Slowly breathing, consonant voices. No abrupt loops, percussion, or speech.
     [146.832, 220, 293.665, 369.994, 440].forEach((frequency, index) => {
       const oscillator = ctx.createOscillator();
@@ -49,8 +56,9 @@ export function useAmbientSound() {
     });
     // Mobile browsers can drop a running context back to suspended/interrupted on their own
     // (audio-session interruptions, backgrounding); reclaim it without waiting for another tap.
+    // Touch chimes run off this same context even while ambient is off, so reclaim it regardless.
     ctx.addEventListener("statechange", () => {
-      if (enabledRef.current && !document.hidden && ctx.state !== "running") void ctx.resume().catch(() => {});
+      if (!document.hidden && ctx.state !== "running") void ctx.resume().catch(() => {});
     });
     context.current = ctx;
     master.current = output;
@@ -79,8 +87,11 @@ export function useAmbientSound() {
   }, []);
 
   const chime = useCallback((step = 0) => {
-    const ctx = context.current;
-    if (!ctx || !master.current || !enabledRef.current || ctx.state !== "running") return;
+    // Touch chimes play by default, independent of the ambient toggle above; the tap that
+    // triggers this is itself the user gesture the browser needs to start the audio context.
+    const ctx = initialize();
+    if (!ctx || !chimeOutput.current) return;
+    if (ctx.state !== "running") void ctx.resume().catch(() => {});
     if (ctx.currentTime - lastTone.current < 0.13) return;
     lastTone.current = ctx.currentTime;
     const note = ctx.createOscillator();
@@ -90,18 +101,19 @@ export function useAmbientSound() {
     envelope.gain.linearRampToValueAtTime(INTERACTION_PEAK, ctx.currentTime + 0.025);
     envelope.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.85);
     note.connect(envelope);
-    envelope.connect(master.current);
+    envelope.connect(chimeOutput.current);
     note.start();
     note.stop(ctx.currentTime + 0.9);
     note.onended = () => { note.disconnect(); envelope.disconnect(); };
-  }, []);
+  }, [initialize]);
 
   useEffect(() => {
     const visibility = () => {
       const ctx = context.current;
       if (!ctx) return;
+      // Touch chimes need the context running too, so reclaim it on return regardless of ambient.
       if (document.hidden) void ctx.suspend().catch(() => {});
-      else if (enabledRef.current) void ctx.resume().catch(() => {});
+      else void ctx.resume().catch(() => {});
     };
     document.addEventListener("visibilitychange", visibility);
     return () => {
@@ -109,6 +121,7 @@ export function useAmbientSound() {
       void context.current?.close().catch(() => {});
       context.current = null;
       master.current = null;
+      chimeOutput.current = null;
     };
   }, []);
 

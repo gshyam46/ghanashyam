@@ -79,3 +79,14 @@ test("old saved sound preferences are ignored and the default volume returns on 
   await expect(page.locator(".volume-control input")).toHaveValue("30");
   await expect(page.locator(".sound-button")).toHaveAttribute("aria-pressed", "false");
 });
+
+test("touch chimes play by default while ambient sound stays off until its own control is used", async ({ page }) => {
+  await page.goto("/");
+  const sound = page.locator(".sound-button");
+  await expect(sound).toHaveAttribute("data-audio-state", "muted");
+  await page.getByRole("button", { name: "Explore my work" }).click();
+  await page.getByRole("tab", { name: /Sillage/ }).click();
+  await expect.poll(() => page.evaluate(() => (window as typeof window & { audioAudit: AudioAudit }).audioAudit.contexts.map(ctx => ctx.state))).toEqual(["running"]);
+  await expect(sound).toHaveAttribute("data-audio-state", "muted");
+  await expect(sound).toHaveAttribute("aria-pressed", "false");
+});

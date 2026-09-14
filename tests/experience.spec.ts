@@ -37,9 +37,9 @@ test("Relay exposes stages and an inspection dialog with focus restoration", asy
   await expect(page.getByRole("button", { name: "Inspect the system" })).toBeFocused();
 });
 
-test("observability and AIDA controls change the visible model", async ({ page }, info) => {
+test("Sillage and AIDA controls change the visible model", async ({ page }, info) => {
   await page.getByRole("button", { name: "Explore my work" }).click();
-  await page.getByRole("tab", { name: /LLM observability/ }).click();
+  await page.getByRole("tab", { name: /Sillage/ }).click();
   const exhibit = page.getByRole("tabpanel");
   const slider = exhibit.getByRole("slider", { name: "Context budget" });
   await slider.focus();

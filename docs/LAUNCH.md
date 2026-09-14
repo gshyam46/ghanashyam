@@ -1,6 +1,6 @@
 ﻿# Vercel launch
 
-The production source is prepared at the root of [gshyam46/ghanashyam](https://github.com/gshyam46/ghanashyam). The release includes the verified drag-outline fix. GitHub device authentication confirmed the owner account `gshyam46` on 12 September 2026. Vercel account authentication and project linking remain pending, and no production deployment URL has been verified. The repository's existing Apache 2.0 license is preserved in `LICENSE`.
+The production source is prepared at the root of [gshyam46/ghanashyam](https://github.com/gshyam46/ghanashyam). Production is live at [www.ghanashyam.dev](https://www.ghanashyam.dev), linked to the `main` branch. The repository's existing Apache 2.0 license is preserved in `LICENSE`.
 
 ## Project settings
 
@@ -15,7 +15,7 @@ The production source is prepared at the root of [gshyam46/ghanashyam](https://g
 | Output Directory | Next.js default; leave the override unset |
 | Optional environment variable | `NEXT_PUBLIC_SITE_URL` = the final HTTPS domain |
 
-Vercel builds use `VERCEL_PROJECT_PRODUCTION_URL` for canonical metadata unless `NEXT_PUBLIC_SITE_URL` overrides it. Local builds fall back to `https://ghanashyamg.vercel.app`; this fallback is not a verified deployment URL for the release. The resolved domain controls canonical metadata, social URLs, and the sitemap. Vercel Preview builds emit noindex/nofollow and a disallow-all robots file; production remains indexable. The contact form uses the existing public EmailJS route and requires no new server secrets.
+Vercel builds use `VERCEL_PROJECT_PRODUCTION_URL` for canonical metadata unless `NEXT_PUBLIC_SITE_URL` overrides it. Local builds fall back to `https://ghanashyamg.vercel.app`, since that env var is only present on Vercel; production resolves to `www.ghanashyam.dev`. The resolved domain controls canonical metadata, social URLs, and the sitemap. Vercel Preview builds emit noindex/nofollow and a disallow-all robots file; production remains indexable. The contact form uses the existing public EmailJS route and requires no new server secrets.
 
 ## Verify the release locally
 
@@ -28,7 +28,7 @@ npm.cmd run build
 npm.cmd run test:e2e:production
 ```
 
-For an existing clone, run these commands from its root and omit the first two lines. On macOS/Linux, use `npm` instead of `npm.cmd`. The production suite starts its own server at `127.0.0.1:3100` and stops it afterward. Tests intercept contact requests; they never send real email. On Windows, tests use installed Google Chrome; elsewhere, run `npx playwright install chromium` once. [VERIFICATION.md](VERIFICATION.md) records the source implementation's historical checks and their limits; those results do not establish a successful remote deployment.
+For an existing clone, run these commands from its root and omit the first two lines. On macOS/Linux, use `npm` instead of `npm.cmd`. The production suite starts its own server at `127.0.0.1:3100` and stops it afterward. Tests intercept contact requests; they never send real email. On Windows, tests use installed Google Chrome; elsewhere, run `npx playwright install chromium` once. [VERIFICATION.md](VERIFICATION.md) records the source implementation's historical checks and their limits.
 
 ## Publish to Vercel
 

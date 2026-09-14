@@ -15,6 +15,11 @@ export interface SculptureProps {
 
 const TAU = Math.PI * 2;
 
+/** Plain lerp is not guaranteed bit-exact at amount 1; snap so a reduced-motion reset matches the rest pose exactly. */
+function settle(current: number, target: number, amount: number) {
+  return amount >= 1 ? target : THREE.MathUtils.lerp(current, target, amount);
+}
+
 const PALETTES = {
   copper: { dust: "#e7b99c", exposure: .93 },
   silver: { dust: "#bcd1ca", exposure: .98 },
@@ -316,15 +321,16 @@ export default function Sculpture({ scene = "signal", palette = "copper", paused
       const targetX = pose.x + dragY + (active ? pointerY * 0.045 : 0) + Math.sin(elapsed * 0.15) * 0.035;
       const targetY = pose.y + dragX + (active ? pointerX * 0.06 : 0) + Math.sin(elapsed * 0.12) * 0.10;
       const targetZ = pose.z + Math.sin(elapsed * 0.09) * 0.055;
-      sculpture.rotation.x = THREE.MathUtils.lerp(sculpture.rotation.x, targetX, ease);
-      sculpture.rotation.y = THREE.MathUtils.lerp(sculpture.rotation.y, targetY, ease);
-      sculpture.rotation.z = THREE.MathUtils.lerp(sculpture.rotation.z, targetZ, ease);
-      sculpture.scale.setScalar(THREE.MathUtils.lerp(sculpture.scale.x, pose.scale, ease));
+      sculpture.rotation.x = settle(sculpture.rotation.x, targetX, ease);
+      sculpture.rotation.y = settle(sculpture.rotation.y, targetY, ease);
+      sculpture.rotation.z = settle(sculpture.rotation.z, targetZ, ease);
+      sculpture.scale.setScalar(settle(sculpture.scale.x, pose.scale, ease));
       sculpture.position.y = Math.sin(elapsed * 0.27) * 0.04;
       const instrumentMotion = instrument.update(elapsed, propsRef.current.scene, propsRef.current.palette, ease);
       targetDust.set(theme.dust);
-      dust.material.uniforms.color.value.lerp(targetDust, ease);
-      renderer.toneMappingExposure = THREE.MathUtils.lerp(renderer.toneMappingExposure, theme.exposure, ease);
+      if (ease >= 1) dust.material.uniforms.color.value.copy(targetDust);
+      else dust.material.uniforms.color.value.lerp(targetDust, ease);
+      renderer.toneMappingExposure = settle(renderer.toneMappingExposure, theme.exposure, ease);
       dust.rotation.z = elapsed * 0.007;
       try {
         renderer.render(world, camera);

@@ -46,7 +46,7 @@ export default function ExperienceDetails({ onOpenChange, onInteract }: { onOpen
       <div className="dialog-inner">
         <div className="dialog-top"><p className="eyebrow">A CLOSER LOOK / EXPERIENCE {String(selected + 1).padStart(2, "0")}</p><button className="close-button" aria-label="Close experience details" onClick={() => dialog.current?.close()}><X size={20} /></button></div>
         <div className="career-content" key={selected}>
-          <span className="career-date">{item.period}</span><h2 id="career-title" tabIndex={-1}>{item.company}<span aria-hidden="true">↗</span></h2>
+          <span className="career-date">{item.period}</span><h2 id="career-title" tabIndex={-1}>{item.company}<span aria-hidden="true">↗︎</span></h2>
           <p className="career-role">{item.role}</p><p className="career-location">{item.fullCompany !== item.company ? `${item.fullCompany} / ` : ""}{item.location}</p>
           <div className="career-contribution"><h3 className="eyebrow">THE WORK</h3><ul>{item.highlights.map(highlight => <li key={highlight}>{highlight}</li>)}</ul></div>
           <div className="career-tools"><h3 className="eyebrow">TOOLS & DISCIPLINES</h3><div>{item.technologies.map(tool => <span key={tool}>{tool}</span>)}</div></div>

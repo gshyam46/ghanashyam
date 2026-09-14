@@ -110,6 +110,7 @@ h2 em { color: var(--accent); letter-spacing: -.045em; }
 .project-tags { display: flex; flex-wrap: wrap; gap: 7px; margin: 23px 0 35px; }
 .project-tags > span { font: 8px var(--mono); padding: 6px 9px; border: 1px solid var(--line); border-radius: 2px; color: var(--muted); }
 .text-link { display: inline-flex; align-items: center; gap: 22px; padding: 8px 0; font-size: 12px; border-bottom: 1px solid var(--accent); width: fit-content; }
+.project-actions { display: flex; align-items: center; gap: 34px; flex-wrap: wrap; }
 .project-preview { min-width: 0; }
 .section-footnote { display: flex; justify-content: space-between; gap: 20px; margin-top: 35px; color: var(--subtle); font: 7px var(--mono); letter-spacing: .08em; }
 .systems-section { min-height: max(900px, 100svh); }

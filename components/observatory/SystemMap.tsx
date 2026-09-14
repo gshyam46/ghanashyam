@@ -292,7 +292,7 @@ export default function SystemMap({ paused }: { paused: boolean }) {
     <p className="sr-only" id="system-map-description">A compact application window with an elongated diamond at its centre shrinks and moves into the Interface component as the engineering behind the product opens beneath it. Its interface calls authenticated APIs and application services. Agents use retrieval, vector search, models and tools. Event intake connects queues, workers and integrations. Data and caching support application services; observability spans the system. Animated glows illustrate requests and responses. Focus or tap a component to inspect its role.</p>
     <div className="system-map-track" ref={trackRef}><div className="system-map-stage" ref={stageRef}>
       <div className="system-map-vision" aria-hidden="true">
-        <span className="system-map-overline">THE EXPERIENCE COMES FIRST</span><p>One useful idea.</p><span className="system-map-scroll-hint">SCROLL TO SEE THE ENGINEERING WITHIN <span>↓</span></span>
+        <span className="system-map-overline">THE EXPERIENCE COMES FIRST</span><p>One useful idea.</p><span className="system-map-scroll-hint">SCROLL TO SEE THE ENGINEERING WITHIN <span>↓︎</span></span>
       </div>
       <svg className="system-map-wires" aria-hidden="true" preserveAspectRatio="none">
         <defs><radialGradient id={`${glowId}-signal`}><stop stopColor="var(--accent)" stopOpacity=".7" /><stop offset=".18" stopColor="var(--accent)" stopOpacity=".4" /><stop offset="1" stopColor="var(--accent)" stopOpacity="0" /></radialGradient></defs>

@@ -15,8 +15,8 @@ test("renders the experience without page errors or horizontal overflow", async 
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Engineeringthe invisible.");
   await expect(page.locator(".signal-sculpture")).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
-  await expect(page.getByRole("button", { name: "Mute ambient sound" })).toHaveAttribute("aria-pressed", "true");
-  await expect(page.locator("[data-audio-state]")).toHaveAttribute("data-audio-state", "playing");
+  await expect(page.getByRole("button", { name: "Enable ambient sound" })).toHaveAttribute("aria-pressed", "false");
+  await expect(page.locator("[data-audio-state]")).toHaveAttribute("data-audio-state", "muted");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
   await page.screenshot({ path: `docs/screenshots/${info.project.name}-overview.png` });
   expect(errors).toEqual([]);
@@ -78,14 +78,14 @@ test("settings change materials, persist the choice, and control sound and motio
   await expect(page.locator(".observatory")).toHaveAttribute("data-palette", "ink");
   await dialog.getByRole("button", { name: "Pause", exact: true }).click();
   await expect(page.locator(".observatory")).toHaveAttribute("data-motion", "still");
-  await dialog.getByRole("button", { name: "On", exact: true }).click();
-  await expect(dialog.getByRole("button", { name: "Off", exact: true })).toHaveAttribute("aria-pressed", "false");
   await dialog.getByRole("button", { name: "Off", exact: true }).click();
+  await expect(dialog.getByRole("button", { name: "On", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await dialog.getByRole("button", { name: "On", exact: true }).click();
   await page.keyboard.press("Escape");
   await page.screenshot({ path: `docs/screenshots/${info.project.name}-field-notes.png` });
   await page.reload();
   await expect(page.locator(".observatory")).toHaveAttribute("data-palette", "ink");
-  await expect(page.getByRole("button", { name: "Mute ambient sound" })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("button", { name: "Enable ambient sound" })).toHaveAttribute("aria-pressed", "false");
 });
 
 test("contact offers the confirmed email and a casual note", async ({ page }) => {

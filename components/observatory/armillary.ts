@@ -334,14 +334,16 @@ export function createArmillary(compact: boolean, palette: ArmillaryPalette) {
       RINGS.forEach((ring, index) => {
         const revolution = index === RINGS.length - 1 ? elapsed * TAU / 125 : 0;
         const target = ring.angle + CHAPTER_POSES[scene][index] + Math.sin(elapsed * ring.speed + ring.phase) * ring.range + revolution;
-        pivots[index].rotation[ring.axis] = THREE.MathUtils.lerp(pivots[index].rotation[ring.axis], target, amount);
+        // A plain lerp is not guaranteed bit-exact at amount 1; snap so a reduced-motion reset matches the rest pose exactly.
+        pivots[index].rotation[ring.axis] = amount >= 1 ? target : THREE.MathUtils.lerp(pivots[index].rotation[ring.axis], target, amount);
         remaining += Math.abs(pivots[index].rotation[ring.axis] - target);
       });
       // The caller freezes elapsed for Pause/reduced motion; there is no private clock.
       signalCarrier.rotation.z = .55 + elapsed * .16;
       for (const { color, finish } of changingColors) {
         const target = finishTargets[nextPalette][finish];
-        color.lerp(target, amount);
+        if (amount >= 1) color.copy(target);
+        else color.lerp(target, amount);
         remaining += Math.abs(color.r - target.r) + Math.abs(color.g - target.g) + Math.abs(color.b - target.b);
       }
       return remaining;

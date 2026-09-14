@@ -3,17 +3,17 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const DEFAULT_VOLUME = 30;
-// Compensate for the 35% → 30% master change: the default interaction peak rises 8%.
-const INTERACTION_PEAK = 0.024 * (35 / DEFAULT_VOLUME) * 1.08;
+// Interaction chimes ring above the ambient hum so each click reads as a clear, separate cue.
+const INTERACTION_PEAK = 0.0316 * (35 / DEFAULT_VOLUME);
 
 /** An original, quiet D-major soundscape. No media files or third-party audio. */
 export function useAmbientSound() {
-  const [enabled, setEnabled] = useState(false);
+  const [enabled, setEnabled] = useState(true);
   const [available, setAvailable] = useState(true);
   const [volume, setVolume] = useState(DEFAULT_VOLUME);
   const context = useRef<AudioContext | null>(null);
   const master = useRef<GainNode | null>(null);
-  const enabledRef = useRef(false);
+  const enabledRef = useRef(true);
   const volumeRef = useRef(DEFAULT_VOLUME);
   const lastTone = useRef(0);
 
@@ -35,7 +35,7 @@ export function useAmbientSound() {
       oscillator.frequency.value = frequency;
       oscillator.detune.value = index % 2 === 0 ? -3 : 3;
       const voice = ctx.createGain();
-      voice.gain.value = index === 0 ? 0.09 : 0.035;
+      voice.gain.value = index === 0 ? 0.074 : 0.029;
       const breath = ctx.createOscillator();
       breath.frequency.value = 0.025 + index * 0.011;
       const depth = ctx.createGain();
@@ -63,6 +63,32 @@ export function useAmbientSound() {
       master.current.gain.cancelScheduledValues(ctx.currentTime);
       master.current.gain.setTargetAtTime(next ? volumeRef.current / 100 : 0, ctx.currentTime, 0.65);
     } catch { setAvailable(false); setEnabled(false); enabledRef.current = false; }
+  }, [initialize]);
+
+  // Ambient sound starts enabled, but the browser still withholds audible playback
+  // until a real user gesture. The first pointer, key, or touch input anywhere on
+  // the page unlocks and starts it, so the visible toggle can read "on" right away.
+  useEffect(() => {
+    if (!window.AudioContext) { setAvailable(false); return; }
+    let unlocked = false;
+    const events = ["pointerdown", "keydown", "touchstart"] as const;
+    const unlock = () => {
+      if (unlocked) return;
+      unlocked = true;
+      events.forEach(event => document.removeEventListener(event, unlock));
+      if (!enabledRef.current) return;
+      try {
+        const ctx = initialize();
+        if (!ctx || !master.current) return;
+        void ctx.resume().then(() => {
+          if (!enabledRef.current || !master.current) return;
+          master.current.gain.cancelScheduledValues(ctx.currentTime);
+          master.current.gain.setTargetAtTime(volumeRef.current / 100, ctx.currentTime, 0.65);
+        });
+      } catch { setAvailable(false); setEnabled(false); enabledRef.current = false; }
+    };
+    events.forEach(event => document.addEventListener(event, unlock, { passive: true }));
+    return () => events.forEach(event => document.removeEventListener(event, unlock));
   }, [initialize]);
 
   const changeVolume = useCallback((value: number) => {

@@ -16,40 +16,39 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-test("the original sound starts off at 30% and only its explicit control enables it", async ({ page }) => {
+test("the original sound starts on at 30% and unlocks on the first interaction anywhere", async ({ page }) => {
   await page.goto("/");
   const sound = page.locator(".sound-button");
-  await expect(sound).toHaveAttribute("data-audio-state", "muted");
-  await expect(sound).toHaveAttribute("aria-pressed", "false");
-  await expect(page.locator(".volume-control input")).toHaveValue("30");
-  await page.getByRole("button", { name: "Open experience settings" }).click();
-  expect(await page.evaluate(() => (window as typeof window & { audioAudit: AudioAudit }).audioAudit.contexts.length)).toBe(0);
-  await page.getByRole("button", { name: "Off", exact: true }).click();
   await expect(sound).toHaveAttribute("data-audio-state", "playing");
-  expect(await page.evaluate(() => (window as typeof window & { audioAudit: AudioAudit }).audioAudit.contexts.map(ctx => ctx.state))).toEqual(["running"]);
+  await expect(sound).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator(".volume-control input")).toHaveValue("30");
+  expect(await page.evaluate(() => (window as typeof window & { audioAudit: AudioAudit }).audioAudit.contexts.length)).toBe(0);
+  await page.getByRole("button", { name: "Open experience settings" }).click();
+  await expect(sound).toHaveAttribute("aria-pressed", "true");
+  await expect.poll(() => page.evaluate(() => (window as typeof window & { audioAudit: AudioAudit }).audioAudit.contexts.map(ctx => ctx.state))).toEqual(["running"]);
 });
 
-test("the original mute fades while keeping one graph and reload starts off again", async ({ page }) => {
+test("the original mute fades while keeping one graph and reload starts on again", async ({ page }) => {
   await page.goto("/");
   const sound = page.locator(".sound-button");
   await sound.click();
-  await expect(sound).toHaveAttribute("aria-pressed", "true");
-  await sound.click();
   await expect(sound).toHaveAttribute("aria-pressed", "false");
-  expect(await page.evaluate(() => (window as typeof window & { audioAudit: AudioAudit }).audioAudit.contexts.map(ctx => ctx.state))).toEqual(["running"]);
   await sound.click();
   await expect(sound).toHaveAttribute("aria-pressed", "true");
+  expect(await page.evaluate(() => (window as typeof window & { audioAudit: AudioAudit }).audioAudit.contexts.map(ctx => ctx.state))).toEqual(["running"]);
   expect(await page.evaluate(() => (window as typeof window & { audioAudit: AudioAudit }).audioAudit.contexts.length)).toBe(1);
   await page.reload();
-  await expect(sound).toHaveAttribute("aria-pressed", "false");
+  await expect(sound).toHaveAttribute("aria-pressed", "true");
   expect(await page.evaluate(() => (window as typeof window & { audioAudit: AudioAudit }).audioAudit.contexts.length)).toBe(0);
 });
 
 test("hidden tabs suspend and resume the original graph without replacing it", async ({ page }) => {
   await page.goto("/");
   const sound = page.locator(".sound-button");
-  await sound.click();
+  // Opening settings is a real gesture that unlocks playback without toggling the sound off.
+  await page.getByRole("button", { name: "Open experience settings" }).click();
   await expect(sound).toHaveAttribute("aria-pressed", "true");
+  await expect.poll(() => page.evaluate(() => (window as typeof window & { audioAudit: AudioAudit }).audioAudit.contexts[0]?.state)).toBe("running");
   await page.evaluate(() => {
     Object.defineProperty(document, "hidden", { configurable: true, get: () => true });
     document.dispatchEvent(new Event("visibilitychange"));
@@ -66,16 +65,15 @@ test("hidden tabs suspend and resume the original graph without replacing it", a
 
 test("old saved sound preferences are ignored and the default volume returns on reload", async ({ page }) => {
   await page.goto("/");
-  await page.evaluate(() => sessionStorage.setItem("observatory-audio", JSON.stringify({ enabled: true, volume: 55, preset: "original-d-major" })));
+  await page.evaluate(() => sessionStorage.setItem("observatory-audio", JSON.stringify({ enabled: false, volume: 55, preset: "original-d-major" })));
   await page.reload();
   await expect(page.locator(".volume-control input")).toHaveValue("30");
-  await expect(page.locator(".sound-button")).toHaveAttribute("aria-pressed", "false");
+  await expect(page.locator(".sound-button")).toHaveAttribute("aria-pressed", "true");
   await page.getByRole("button", { name: "Open experience settings" }).click();
-  await page.getByRole("button", { name: "Off", exact: true }).click();
   await page.getByRole("slider", { name: "Volume" }).fill("0");
   await expect(page.locator(".sound-button")).toHaveAttribute("data-audio-state", "silent");
   await page.getByRole("slider", { name: "Volume" }).fill("42");
   await page.reload();
   await expect(page.locator(".volume-control input")).toHaveValue("30");
-  await expect(page.locator(".sound-button")).toHaveAttribute("aria-pressed", "false");
+  await expect(page.locator(".sound-button")).toHaveAttribute("aria-pressed", "true");
 });

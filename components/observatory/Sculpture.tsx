@@ -362,20 +362,39 @@ export default function Sculpture({ scene = "signal", palette = "copper", paused
       requestFrame();
     }
 
-    function updateDragHit(clientX: number, clientY: number) {
+    // A touch has no hover preview to help a finger find the thin rings, so a missed
+    // tap is retried against a small ring of nearby points before it counts as a miss.
+    const TOUCH_HIT_OFFSETS: [number, number][] = [
+      [0, -18], [0, 18], [-18, 0], [18, 0],
+      [-13, -13], [13, -13], [-13, 13], [13, 13],
+    ];
+
+    function pointInBounds(clientX: number, clientY: number, bounds: DOMRect) {
+      return clientX >= bounds.left && clientX <= bounds.right && clientY >= bounds.top && clientY <= bounds.bottom;
+    }
+
+    function raycastAt(clientX: number, clientY: number, bounds: DOMRect) {
+      pickPoint.set(
+        ((clientX - bounds.left) / bounds.width) * 2 - 1,
+        1 - ((clientY - bounds.top) / bounds.height) * 2,
+      );
+      raycaster.setFromCamera(pickPoint, camera);
+      return raycaster.intersectObjects(instrument.pickTargets, true).length > 0;
+    }
+
+    function updateDragHit(clientX: number, clientY: number, tolerant = false) {
       const bounds = container!.getBoundingClientRect();
       let hit = false;
-      if (!contextLost && propsRef.current.scene === "signal"
-        && clientX >= bounds.left && clientX <= bounds.right
-        && clientY >= bounds.top && clientY <= bounds.bottom) {
-        pickPoint.set(
-          ((clientX - bounds.left) / bounds.width) * 2 - 1,
-          1 - ((clientY - bounds.top) / bounds.height) * 2,
-        );
+      if (!contextLost && propsRef.current.scene === "signal" && pointInBounds(clientX, clientY, bounds)) {
         sculpture.updateWorldMatrix(true, true);
         camera.updateWorldMatrix(true, false);
-        raycaster.setFromCamera(pickPoint, camera);
-        hit = raycaster.intersectObjects(instrument.pickTargets, true).length > 0;
+        hit = raycastAt(clientX, clientY, bounds);
+        if (!hit && tolerant) {
+          for (const [offsetX, offsetY] of TOUCH_HIT_OFFSETS) {
+            const x = clientX + offsetX, y = clientY + offsetY;
+            if (pointInBounds(x, y, bounds) && raycastAt(x, y, bounds)) { hit = true; break; }
+          }
+        }
       }
       const value = String(hit);
       const cursor = dragging ? "grabbing" : hit ? "grab" : "default";
@@ -385,7 +404,7 @@ export default function Sculpture({ scene = "signal", palette = "copper", paused
     }
 
     function pointerDown(event: PointerEvent) {
-      if (event.button !== 0 || !updateDragHit(event.clientX, event.clientY)) return;
+      if (event.button !== 0 || !updateDragHit(event.clientX, event.clientY, event.pointerType !== "mouse")) return;
       dragging = true;
       container!.dataset.dragging = "true";
       pointerClientX = event.clientX;
@@ -422,7 +441,7 @@ export default function Sculpture({ scene = "signal", palette = "copper", paused
         lastPointerTime = event.timeStamp;
         previousX = event.clientX;
         previousY = event.clientY;
-      } else updateDragHit(event.clientX, event.clientY);
+      } else updateDragHit(event.clientX, event.clientY, event.pointerType !== "mouse");
       requestFrame();
     }
 

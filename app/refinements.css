@@ -150,6 +150,7 @@
   .observatory .experience-dialog .dialog-top { margin-bottom: 20px; }
   .observatory .experience-dialog h2 { font-size: clamp(30px, 7.7vw, 40px); }
   .observatory .career-dialog #career-title { font-size: clamp(28px, 7.7vw, 42px); overflow-wrap: anywhere; }
+  .observatory .career-dialog #career-title > span, .observatory .inspection-heading h2 > span { display: none; }
   .observatory .dialog-footnote { font-size: 9px; }
   .observatory .contact-section .section-topline { margin-bottom: 45px; }
   .observatory .contact-content h2 { font-size: clamp(39px, 10.8vw, 69px); }
@@ -183,7 +184,6 @@
   .observatory .project-tabs > button > span { font-size: 8px; }
   .observatory .contact-buttons .primary-button { font-size: 11px; gap: 15px; padding-inline: 12px; }
   .observatory .social-button { width: 42px; min-width: 42px; }
-  .observatory .career-dialog #career-title > span { display: none; }
 }
 @media(max-height:550px) and (orientation:landscape) {
   .observatory .site-header { height: 72px; }
